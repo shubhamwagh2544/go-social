@@ -18,6 +18,23 @@ type UserStore struct {
 }
 
 func (s *UserStore) Create(ctx context.Context, user *User) error {
-	// sql op
+	query := `insert into users (username, email, password)
+			values ($1, $2, $3) returning id, created_at returning id, created_at`
+
+	err := s.db.QueryRowContext(
+		ctx,
+		query,
+		user.Username,
+		user.Email,
+		user.Password,
+	).Scan(
+		&user.Id,
+		&user.CreatedAt,
+	)
+
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
