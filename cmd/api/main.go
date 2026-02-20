@@ -43,6 +43,8 @@ func main() {
 	config := config{
 		addr:     env.GetString("ADDR", ":8001"),
 		dbConfig: dbConfig,
+		env:      env.GetString("ENV", "development"),
+		version:  env.GetString("VERSION", "1.0.0"),
 	}
 
 	app := &application{
