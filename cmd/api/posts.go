@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -71,7 +70,15 @@ func (app *application) getPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("Post in PostHandler: %+v\n", post)
+	// log.Printf("Post in PostHandler: %+v\n", post)
+
+	comments, err := app.store.Comments.GetByPostId(ctx, int64(postId))
+	if err != nil {
+		app.internalServerError(w, r, err)
+		return
+	}
+
+	post.Comments = comments
 
 	if err := writeJSON(w, http.StatusOK, post); err != nil {
 		app.internalServerError(w, r, err)

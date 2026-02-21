@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"log"
 
 	"github.com/lib/pq"
 )
@@ -83,7 +82,7 @@ func (s *PostStore) GetById(ctx context.Context, id int64) (*Post, error) {
 		}
 	}
 
-	log.Printf("Post in Store: %+v\n", post)
+	// log.Printf("Post in Store: %+v\n", post)
 
 	// return &post, nil
 	return post, nil
